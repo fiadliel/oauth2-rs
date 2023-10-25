@@ -59,13 +59,13 @@
 //!
 //!    Synchronous HTTP clients should implement the following trait:
 //!    ```rust,ignore
-//!    FnOnce(HttpRequest) -> Result<HttpResponse, RE>
+//!    Fn(HttpRequest) -> Result<HttpResponse, RE>
 //!    where RE: std::error::Error + 'static
 //!    ```
 //!
 //!    Asynchronous HTTP clients should implement the following trait:
 //!    ```rust,ignore
-//!    FnOnce(HttpRequest) -> F
+//!    Fn(HttpRequest) -> F
 //!    where
 //!      F: Future<Output = Result<HttpResponse, RE>>,
 //!      RE: std::error::Error + 'static
@@ -1306,7 +1306,7 @@ where
     ///
     pub fn request<F, RE>(self, http_client: F) -> Result<TR, RequestTokenError<RE, TE>>
     where
-        F: FnOnce(HttpRequest) -> Result<HttpResponse, RE>,
+        F: Fn(HttpRequest) -> Result<HttpResponse, RE>,
         RE: Error + 'static,
     {
         http_client(self.prepare_request()?)
@@ -1322,7 +1322,7 @@ where
         http_client: C,
     ) -> Result<TR, RequestTokenError<RE, TE>>
     where
-        C: FnOnce(HttpRequest) -> F,
+        C: Fn(HttpRequest) -> F,
         F: Future<Output = Result<HttpResponse, RE>>,
         RE: Error + 'static,
     {
@@ -1409,7 +1409,7 @@ where
     ///
     pub fn request<F, RE>(self, http_client: F) -> Result<TR, RequestTokenError<RE, TE>>
     where
-        F: FnOnce(HttpRequest) -> Result<HttpResponse, RE>,
+        F: Fn(HttpRequest) -> Result<HttpResponse, RE>,
         RE: Error + 'static,
     {
         http_client(self.prepare_request()?)
@@ -1424,7 +1424,7 @@ where
         http_client: C,
     ) -> Result<TR, RequestTokenError<RE, TE>>
     where
-        C: FnOnce(HttpRequest) -> F,
+        C: Fn(HttpRequest) -> F,
         F: Future<Output = Result<HttpResponse, RE>>,
         RE: Error + 'static,
     {
@@ -1533,7 +1533,7 @@ where
     ///
     pub fn request<F, RE>(self, http_client: F) -> Result<TR, RequestTokenError<RE, TE>>
     where
-        F: FnOnce(HttpRequest) -> Result<HttpResponse, RE>,
+        F: Fn(HttpRequest) -> Result<HttpResponse, RE>,
         RE: Error + 'static,
     {
         http_client(self.prepare_request()?)
@@ -1549,7 +1549,7 @@ where
         http_client: C,
     ) -> Result<TR, RequestTokenError<RE, TE>>
     where
-        C: FnOnce(HttpRequest) -> F,
+        C: Fn(HttpRequest) -> F,
         F: Future<Output = Result<HttpResponse, RE>>,
         RE: Error + 'static,
     {
@@ -1657,7 +1657,7 @@ where
     ///
     pub fn request<F, RE>(self, http_client: F) -> Result<TR, RequestTokenError<RE, TE>>
     where
-        F: FnOnce(HttpRequest) -> Result<HttpResponse, RE>,
+        F: Fn(HttpRequest) -> Result<HttpResponse, RE>,
         RE: Error + 'static,
     {
         http_client(self.prepare_request()?)
@@ -1673,7 +1673,7 @@ where
         http_client: C,
     ) -> Result<TR, RequestTokenError<RE, TE>>
     where
-        C: FnOnce(HttpRequest) -> F,
+        C: Fn(HttpRequest) -> F,
         F: Future<Output = Result<HttpResponse, RE>>,
         RE: Error + 'static,
     {
@@ -1807,7 +1807,7 @@ where
     ///
     pub fn request<F, RE>(self, http_client: F) -> Result<TIR, RequestTokenError<RE, TE>>
     where
-        F: FnOnce(HttpRequest) -> Result<HttpResponse, RE>,
+        F: Fn(HttpRequest) -> Result<HttpResponse, RE>,
         RE: Error + 'static,
     {
         http_client(self.prepare_request()?)
@@ -1823,7 +1823,7 @@ where
         http_client: C,
     ) -> Result<TIR, RequestTokenError<RE, TE>>
     where
-        C: FnOnce(HttpRequest) -> F,
+        C: Fn(HttpRequest) -> F,
         F: Future<Output = Result<HttpResponse, RE>>,
         RE: Error + 'static,
     {
@@ -1917,7 +1917,7 @@ where
     ///
     pub fn request<F, RE>(self, http_client: F) -> Result<(), RequestTokenError<RE, TE>>
     where
-        F: FnOnce(HttpRequest) -> Result<HttpResponse, RE>,
+        F: Fn(HttpRequest) -> Result<HttpResponse, RE>,
         RE: Error + 'static,
     {
         // From https://tools.ietf.org/html/rfc7009#section-2.2:
@@ -1936,7 +1936,7 @@ where
         http_client: C,
     ) -> Result<(), RequestTokenError<RE, TE>>
     where
-        C: FnOnce(HttpRequest) -> F,
+        C: Fn(HttpRequest) -> F,
         F: Future<Output = Result<HttpResponse, RE>>,
         RE: Error + 'static,
     {
@@ -2220,7 +2220,7 @@ where
         http_client: F,
     ) -> Result<DeviceAuthorizationResponse<EF>, RequestTokenError<RE, TE>>
     where
-        F: FnOnce(HttpRequest) -> Result<HttpResponse, RE>,
+        F: Fn(HttpRequest) -> Result<HttpResponse, RE>,
         RE: Error + 'static,
         EF: ExtraDeviceAuthorizationFields,
     {
@@ -2237,7 +2237,7 @@ where
         http_client: C,
     ) -> Result<DeviceAuthorizationResponse<EF>, RequestTokenError<RE, TE>>
     where
-        C: FnOnce(HttpRequest) -> F,
+        C: Fn(HttpRequest) -> F,
         F: Future<Output = Result<HttpResponse, RE>>,
         RE: Error + 'static,
         EF: ExtraDeviceAuthorizationFields,
